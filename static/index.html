@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TezX Server Dashboard</title>
+        <style>
+            /* General Reset */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Poppins", Arial, sans-serif;
+            }
+
+            /* Background Styling */
+            body {
+                background: radial-gradient(circle, #222 10%, #111 90%);
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                text-align: center;
+                padding: 20px;
+            }
+
+            /* Container */
+            .container {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                max-width: 600px;
+                width: 100%;
+                animation: fadeIn 0.8s ease-in-out;
+                transition: 0.3s ease-in-out;
+            }
+
+            /* Container Hover */
+            .container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            }
+
+            /* Logo */
+            img {
+                width: 90px;
+                height: 90px;
+                object-fit: contain;
+                margin-bottom: 15px;
+                animation: scaleUp 0.8s ease-in-out;
+            }
+
+            /* Heading */
+            h1 {
+                font-size: 30px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                color: #FF581E;
+            }
+
+            /* Description */
+            p {
+                font-size: 17px;
+                opacity: 0.9;
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+
+            /* Status Card */
+            .status-card {
+                background: rgba(255, 255, 255, 0.12);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 20px;
+                font-size: 15px;
+                text-align: left;
+                border-left: 5px solid #FF581E;
+            }
+
+            .status-card p {
+                margin: 5px 0;
+                font-size: 16px;
+            }
+
+            .status-card span {
+                font-weight: 600;
+                color: #FF581E;
+            }
+
+            /* Call to Action Button */
+            .btn {
+                display: inline-block;
+                background: #FF581E;
+                color: #fff;
+                padding: 12px 25px;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 10px;
+                text-decoration: none;
+                transition: 0.3s ease-in-out;
+            }
+
+            .btn:hover {
+                background: #e14b17;
+                transform: scale(1.05);
+            }
+
+            /* Footer */
+            .footer {
+                margin-top: 20px;
+                font-size: 16px;
+                opacity: 0.8;
+            }
+
+            .footer a {
+                color: #FF581E;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .footer a:hover {
+                text-decoration: underline;
+            }
+
+            /* Animations */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes scaleUp {
+                from {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .url-info {
+                background-color: #333;
+                padding: 10px;
+                border-radius: 10px;
+                margin-top: 20px;
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <img src="/favicon.ico" alt="TezX Logo">
+            <h1>TezX Server Running 🚀</h1>
+            <p>Your high-performance server is live and ready to handle requests efficiently.</p>
+
+            <div class="status-card">
+                <p><span>🔹 Server Status:</span> Running ✅</p>
+                <p><span>🔹 Port:</span> <b id="port"></b></p>
+                <p><span>🔹 Framework:</span> TezX</p>
+                <p><span>🔹 Uptime:</span> <span id="uptime">Loading...</span></p>
+            </div>
+
+            <div class="url-info">
+                <strong>Current URL:</strong> <span id="current-url">Loading...</span>
+            </div>
+
+            <a href="/docs" class="btn">📖 View Documentation</a>
+
+            <div class="footer">
+                &copy; <b id="year">2025</b> TezX. All rights reserved.
+                <br>
+                <a href="">Visit TezX Official Site</a>
+            </div>
+        </div>
+
+        <script>
+            const startTime = Date.now();
+            function updateUptime() {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById("uptime").textContent = `${elapsed} seconds`;
+            }
+            setInterval(updateUptime, 1000);
+
+            // Function to display the current URL dynamically
+            function updateCurrentUrl() {
+                const currentUrl = window.location;
+                document.getElementById("port").textContent = currentUrl.port;
+                document.getElementById("current-url").textContent = currentUrl.href;
+                document.getElementById("year").textContent = new Date().getFullYear();
+            }
+            window.onload = updateCurrentUrl;
+        </script>
+    </body>
+</html>

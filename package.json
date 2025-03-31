@@ -1,0 +1,38 @@
+{
+  "name": "tezx-nodejs-example",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npx pkgroll --clean-dist",
+    "start": "node dist/index.js",
+    "nodemon": "nodemon src/index.ts",
+    "dev": "tsx watch src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tezxjs/tezx-nodejs-example"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tezxjs/tezx-nodejs-example"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "homepage": "https://github.com/tezxjs/tezx-nodejs-example",
+  "dependencies": {
+    "pkgroll": "^2.11.2",
+    "tezx": "^1.0.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14"
+  }
+}
