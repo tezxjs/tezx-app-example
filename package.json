@@ -1,22 +1,24 @@
 {
-  "name": "tezx-nodejs-example",
+  "name": "tezx-app-example",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "build": "npx pkgroll --clean-dist",
     "start": "node dist/index.js",
     "nodemon": "nodemon src/index.ts",
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "bun": "bun run --hot --watch src/index.ts",
+    "deno": "deno run --watch --allow-net  --allow-read --allow-env --unstable-sloppy-imports src/index.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tezxjs/tezx-nodejs-example"
+    "url": "git+https://github.com/tezxjs/tezx-app-example"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tezxjs/tezx-nodejs-example"
+    "url": "https://github.com/tezxjs/tezx-app-example"
   },
   "exports": {
     ".": {
@@ -25,7 +27,7 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "homepage": "https://github.com/tezxjs/tezx-nodejs-example",
+  "homepage": "https://github.com/tezxjs/tezx-app-example",
   "dependencies": {
     "pkgroll": "^2.11.2",
     "tezx": "^1.0.2",
