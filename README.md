@@ -5,10 +5,6 @@
 
 TezX is a high-performance backend framework designed for building scalable and efficient web applications. This README provides detailed installation instructions and usage information for setting up your project with TezX.
 
-```bash
-   npm install tezx@latest
-```
-
 ## Features
 
 - Lightweight and fast
@@ -18,33 +14,26 @@ TezX is a high-performance backend framework designed for building scalable and 
 - Simple API for creating web applications
 - Fully customizable to fit your needs
 
-## Installation
+### Steps to Install TezX
 
 Follow these steps to get started with TezX:
 
-### Steps to Install TezX
-
-1. **Create a new directory for your project**:
-
-   ```bash
-   mkdir my-tezx-project
-   cd my-tezx-project
-   ```
-
-2. **Initialize a new Node.js project**:
-
-   Run the following command to generate a `package.json` file:
+1. **Clone Repository**:
 
 ```bash
-npm init -y
+   git clone https://github.com/tezxjs/tezx-app-example
 ```
 
-3. **Install TezX as a dependency**:
-
-Install TezX from npm:
+2. **Install latest `tezx`**:
 
 ```bash
-npm install tezx@latest
+   npm install tezx@latest
+```
+
+3. **Run Project**:
+
+```bash
+npm run dev
 ```
 
 This will start the TezX server on **<http://localhost:3001>**.
