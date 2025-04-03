@@ -1,16 +1,26 @@
-import { bunAdapter, denoAdapter, logger, nodeAdapter, TezX } from "tezx";
+import { bunAdapter, denoAdapter, nodeAdapter, TezX } from "tezx";
+import { logger, rateLimiter } from "tezx/middleware";
 let app = new TezX({
-    // logger: logger
+    debugMode: true,
 });
+app.use([logger(),
+rateLimiter({
+    maxRequests: 1,
+    windowMs: 10_000,
+    onError(ctx, r, error) {
+        return ctx.json({ error: error.message })
+    }
+})
+]);
 app.static("/", "./static")
 app.get("/", (ctx) => {
     return ctx.redirect('/index.html');
 })
 
 // Use for node
-nodeAdapter(app).listen(3001, (message) => {
-    console.log(message)
-})
+// nodeAdapter(app).listen(3001, (message) => {
+//     console.log(message)
+// })
 
 // use it for bun
 bunAdapter(app).listen(3001, (message) => {
