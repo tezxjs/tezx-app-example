@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npx pkgroll --clean-dist",
+    "clean": "rm -rf dist",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs --removeComments",
+    "build:esm": "tsc --module ESNext --outDir dist --removeComments",
+    "build:dts": "tsc --module ESNext --outDir dist --declaration --emitDeclarationOnly",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:dts",
     "start": "node dist/index.js",
     "nodemon": "nodemon src/index.ts",
     "dev": "tsx watch src/index.ts",
@@ -30,7 +34,7 @@
   "homepage": "https://github.com/tezxjs/tezx-app-example",
   "dependencies": {
     "pkgroll": "^2.11.2",
-    "tezx": "^1.0.13",
+    "tezx": "^1.0.14",
     "tsx": "^4.19.2",
     "typescript": "^5.8.2"
   },
