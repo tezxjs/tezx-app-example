@@ -1,5 +1,7 @@
-import { bunAdapter, denoAdapter, nodeAdapter, TezX } from "tezx";
+import { TezX } from "tezx";
 import { logger, rateLimiter } from "tezx/middleware";
+import { bunAdapter } from "tezx/adapter";
+
 let app = new TezX({
     debugMode: true,
 });
@@ -23,7 +25,7 @@ app.get("/", (ctx) => {
 // })
 
 // use it for bun
-bunAdapter(app).listen(3001, (message) => {
+bunAdapter(app).listen(3002, (message) => {
     console.log(message)
 })
 

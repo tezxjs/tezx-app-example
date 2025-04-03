@@ -62,7 +62,8 @@ SECRET_KEY=your_secure_key_here
 ### **1. Create `src/index.ts`**
 
 ```typescript
-import { TezX,  nodeAdapter } from "tezx";
+import { TezX } from "tezx";
+import {nodeAdapter} from "tezx/adapter";
 import {logger} from "tezx/middleware";
 import {loadEnv} from "tezx/helper";
 const env = loadEnv();
@@ -176,6 +177,8 @@ Add **`package.json`**
 **`src/index.ts`**
 
 ```ts
+import {bunAdapter} from "tezx/adapter";
+
 bunAdapter(app).listen(3001, (message) => {
     console.log(message)
 })
@@ -194,6 +197,7 @@ Add **`package.json`**
 **`src/index.ts`**
 
 ```ts
+import {denoAdapter} from "tezx/adapter";
 denoAdapter(app).listen(3001, (message) => {
     console.log(message)
 })
