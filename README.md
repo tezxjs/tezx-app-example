@@ -62,12 +62,12 @@ SECRET_KEY=your_secure_key_here
 ### **1. Create `src/index.ts`**
 
 ```typescript
-import { TezX, loadEnv, logger, nodeAdapter } from "tezx";
-
+import { TezX,  nodeAdapter } from "tezx";
+import {logger} from "tezx/middleware";
+import {loadEnv} from "tezx/helper";
 const env = loadEnv();
 
 const server = new TezX({
-  logger: logger,
   env: env,
 });
 
@@ -91,14 +91,28 @@ npm install typescript @types/node tsx pkgroll --save-dev
 ```json
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
     "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+    "module": "CommonJS",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    // "declaration": true,
+    // "sourceMap": true,
+    "removeComments": false, // Keep comments in .d.ts
+    // "emitDeclarationOnly": false, // Ensure .js files are still generated
+    "strict": true
+    // "esModuleInterop": true,
+    // "emitDeclarationOnly": true,
+    // "skipLibCheck": true,
+    // "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests"
+  ]
 }
 ```
 
@@ -138,7 +152,11 @@ Add **`package.json`**
 
 ```json
 "scripts": {
-    "build": "npx pkgroll --clean-dist",
+    "clean": "rm -rf dist",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs --removeComments",
+    "build:esm": "tsc --module ESNext --outDir dist --removeComments",
+    "build:dts": "tsc --module ESNext --outDir dist --declaration --emitDeclarationOnly",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:dts",
     "start": "node dist/index.js",
     "nodemon": "nodemon src/index.ts",
     "dev": "tsx watch src/index.ts"
@@ -197,7 +215,7 @@ server.static("./public", {
 ### **2. Enable CORS**
 
 ```typescript
-import { cors } from "tezx";
+import { cors } from "tezx/middleware";
 server.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -222,7 +240,11 @@ If  you build `ts` to `js`. Use `tsc` or `pkgroll`
 1. **tsc**:
 
 ```bash
-    "build": "npx tsc"
+    "clean": "rm -rf dist",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs --removeComments",
+    "build:esm": "tsc --module ESNext --outDir dist --removeComments",
+    "build:dts": "tsc --module ESNext --outDir dist --declaration --emitDeclarationOnly",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:dts",
 ```
 
 2. **pkgroll**:
