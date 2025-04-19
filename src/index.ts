@@ -24,7 +24,14 @@ app.get(
             message(ws, msg) {
                 try {
                     if (msg === "ping") {
-                        ws.send("pong 🏓");
+                        clients.forEach((client) => {
+                            if (client !== ws && client.readyState === WebSocket.OPEN) {
+                                client.send(JSON.stringify({ message: data.message }));
+                            }
+                            else if (client.readyState !== WebSocket.OPEN) {
+                                clients.delete(client);
+                            }
+                        });
                         return;
                     }
 
