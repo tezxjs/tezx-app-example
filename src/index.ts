@@ -1,46 +1,63 @@
 import { TezX } from "tezx";
-import { bunAdapter } from "tezx/adapter";
+import { nodeAdapter } from "tezx/adapter";
 import { logger } from "tezx/middleware";
 import { upgradeWebSocket } from "tezx/ws";
 
-let app = new TezX({
-    debugMode: true,
-});
+const app = new TezX({ debugMode: true });
 app.use([logger()]);
-app.static("/", "./static")
+
+app.static("/", "./static");
 
 app.get("/", (ctx) => {
-    return ctx.redirect('/index.html');
-})
+    return ctx.redirect("/index.html");
+});
 
-// let clients: Set<WebSocket> = new Set();
+let clients = new Set<WebSocket>();
+
 app.get(
     "/ws",
-    upgradeWebSocket((ctx) => {
+    upgradeWebSocket(() => {
         return {
-            open: (ws) => {
+            open(ws) {
                 ws.send("👋 Welcome to TezX WebSocket!");
             },
-            message: async (ws, msg) => {
-                // clients.add(ws);
-                // clients.forEach(w => {
-                //     w.send(msg)
-                // })
-                // socket.push(ws)
-                // console.log(JSON.parse(msg))
-                console.log("Received:", msg);
-                if (msg === "ping") ws.send("pong 🏓");
-                else ws.send("Echo: " + msg);
+            message(ws, msg) {
+                try {
+                    if (msg === "ping") {
+                        ws.send("pong 🏓");
+                        return;
+                    }
+
+                    const data = JSON.parse((msg as any).toString());
+
+                    switch (data.type) {
+                        case "join":
+                            clients.add(ws);
+                            ws.send(JSON.stringify({ online: clients.size }));
+                            break;
+
+                        case "broadcast":
+                            clients.forEach((client) => {
+                                if (client !== ws && client.readyState === WebSocket.OPEN) {
+                                    client.send(JSON.stringify({ message: data.message }));
+                                }
+                                else if (client.readyState !== WebSocket.OPEN) {
+                                    clients.delete(client);
+                                }
+                            });
+                            break;
+                    }
+                } catch (err) {
+                    console.error("Invalid message", err);
+                }
             },
             close(ws, data) {
-                console.log(data?.reason.toString())
+                clients.delete(ws);
+                console.log(`Socket closed: ${data?.reason || "No reason"}`);
             },
-        }
-    },
-    ),
-    (ctx) => {
-        return ctx.sendFile('ws.html')
-    },
+        };
+    }),
+    (ctx) => ctx.sendFile("ws.html")
 );
 
 // Use for node
@@ -49,7 +66,7 @@ app.get(
 // })
 
 // use it for bun
-bunAdapter(app).listen(3002, (message) => {
+nodeAdapter(app).listen(3002, (message) => {
     console.log(message)
 })
 
