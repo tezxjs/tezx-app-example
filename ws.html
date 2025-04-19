@@ -119,7 +119,13 @@
         </div>
 
         <script>
-            const ws = new WebSocket(`ws://${location.host}/ws`);
+            let p = location.protocol == 'https:' ? 'wss' : 'ws';
+            if (location.port) {
+                p += `://${location.hostname}:${location.port}`;
+            } else {
+                p += `://${location.hostname}`;
+            }
+            let ws = new WebSocket(p + '/ws');
             const messages = document.getElementById("messages");
             const input = document.getElementById("input");
 
