@@ -34,7 +34,7 @@
   "homepage": "https://github.com/tezxjs/tezx-app-example",
   "dependencies": {
     "pkgroll": "^2.11.2",
-    "tezx": "^1.0.53",
+    "tezx": "^1.0.57",
     "tsx": "^4.19.2",
     "typescript": "^5.8.2",
     "ws": "^8.18.1"
