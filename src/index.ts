@@ -73,9 +73,7 @@ app.get(
 // })
 
 // use it for bun
-nodeAdapter(app).listen(3002, (message) => {
-    console.log(message)
-})
+nodeAdapter(app).listen(3002)
 
 // use it for deno
 
