@@ -3,16 +3,16 @@ import { nodeAdapter } from "tezx/adapter";
 import { logger } from "tezx/middleware";
 import { upgradeWebSocket } from "tezx/ws";
 
-const app = new TezX({ debugMode: true });
+const app = new TezX({
+    debugMode: true,
+});
 app.use([logger()]);
 
 app.static("/", "./static");
 app.use(async (ctx, next) => {
-    // await new Promise((resolve) => setTimeout(resolve, 6000)); // 6 seconds
     await next()
 })
 app.get("/", (ctx) => {
-
     return ctx.redirect("/index.html");
 });
 
